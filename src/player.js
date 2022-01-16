@@ -20,7 +20,7 @@ const songs = [
    {
       title : 'song-1',
       artist : 'writer-1',
-      url : require('../assets/songs/1.mp3'),
+      url : 'https://firebasestorage.googleapis.com/v0/b/my-project-1-5f5ff.appspot.com/o/allFiles%2F4.mp3?alt=media&token=4138588b-f96e-4580-a441-43bdcc3d690b',
       id:1,
       artwork : require('../assets/images/1.jpg'),
       // duration:131

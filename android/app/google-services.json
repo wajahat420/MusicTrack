@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "59396975914",
+    "firebase_url": "https://my-project-1-5f5ff.firebaseio.com",
+    "project_id": "my-project-1-5f5ff",
+    "storage_bucket": "my-project-1-5f5ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59396975914:android:9bc78da017c3dc0981c253",
+        "android_client_info": {
+          "package_name": "com.musictrack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59396975914-ipfomdj700g5q6p46lm488q0r5jc2q4j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKgLlfpaCk__OGHfrtMgV8jMLqUQ0DArw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "59396975914-ipfomdj700g5q6p46lm488q0r5jc2q4j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
