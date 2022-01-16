@@ -1,7 +1,7 @@
 import React,{useEffect} from 'react'
 import { View, Text, PermissionsAndroid } from 'react-native'
 import DocumentPicker from 'react-native-document-picker';
-import FilePickerManager from 'react-native-file-picker';
+// import FilePickerManager from 'react-native-file-picker';
 import RNFetchBlob from 'rn-fetch-blob';
 import Firebase from '../config/firebase';
 
@@ -81,18 +81,26 @@ export default function AddSong() {
 
    }
 
+   const addSongData = () => {
+      database()
+         .ref('/songs')
+         .push({
+            userID: 2,
+            trackID: 3,
+            songURL : 'songURL',
+            imgUrl : 'imageURL',
+            artist : 'artist',
+            songName : 'songName'
+         })
+      .then(() => console.log('Data set.'))
+      .catch(err => console.log(err))
+   }
+
    useEffect(() => {
       try{
 
+      // addSongData()
 
-         database()
-         .ref('/songs')
-         .set({
-            userID: 1,
-            trackID: 2,
-            songURL : '123'
-         })
-         .then(() => console.log('Data set.'));
    
 
       }catch(err){
