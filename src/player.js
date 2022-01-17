@@ -16,53 +16,37 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const {width, height} = Dimensions.get('window')
 
-const songs = [
-   {
-      title : 'song-1',
-      artist : 'writer-1',
-      url : 'https://firebasestorage.googleapis.com/v0/b/my-project-1-5f5ff.appspot.com/o/allFiles%2F4.mp3?alt=media&token=4138588b-f96e-4580-a441-43bdcc3d690b',
-      id:1,
-      artwork : require('../assets/images/1.jpg'),
-      // duration:131
-   },
-   {
-      title : 'song-2',
-      artist : 'writer-2',
-      artwork : require('../assets/images/2.jpg'),
+// const songs = [
+//    {
+//       title : 'song-1',
+//       // artist : 'writer-1',
+//       url : 'https://firebasestorage.googleapis.com/v0/b/my-project-1-5f5ff.appspot.com/o/allFiles%2F4.mp3?alt=media&token=4138588b-f96e-4580-a441-43bdcc3d690b',
+//       // id:1,
+//       artwork : require('../assets/images/1.jpg'),
+//       // duration:131
+//    },
+//    {
+//       title : 'song-2',
+//       // artist : 'writer-2',
+//       artwork : require('../assets/images/2.jpg'),
 
-      url : require('../assets/songs/2.mp3'),
-      id:2,
-      // duration:131
-   },
-   {
-      title : 'song-3',
-      artist : 'writer-3',
-      artwork : require('../assets/images/3.jpeg'),
-      url : require('../assets/songs/3.mp3'),
-      id:3,
-      // duration:131
-   }
-]
+//       url : require('../assets/songs/2.mp3'),
+//       // id:2,
+//       // duration:131
+//    },
+//    {
+//       title : 'song-3',
+//       // artist : 'writer-3',
+//       artwork : require('../assets/images/3.jpeg'),
+//       url : require('../assets/songs/3.mp3'),
+//       // id:3,
+//       // duration:131
+//    }
+// ]
 
-const setupPlayer = async() => {
-   await TrackPlayer.setupPlayer()
 
-   await TrackPlayer.add(songs)
-}
 
-const togglePlayback = async(playbackState) => {
-   const currentTrack = await TrackPlayer.getCurrentTrack()
-
-   if( currentTrack != null ){
-      if( playbackState == State.Paused ){
-         await TrackPlayer.play()
-      } else{
-         await TrackPlayer.pause()
-      }
-   }
-}
-
-export default function Index() {
+export default function Index({route}) {
    const playbackState = usePlaybackState()
    const scrollX = useRef(new Animated.Value(0)).current
 
@@ -72,9 +56,38 @@ export default function Index() {
    const [trackArtwork, settTrackArtwork] = useState('')
    const [trackArtist, settTrackArtist] = useState('')
    const [trackTitle, settTrackTitle] = useState('')
+   // const [songs, setSongs] = useState([])
+   const songs = route.params.map((elem, index) => {
+      const obj = {
+         artwork : elem.artwork,
+         title : elem.title,
+         url : elem.url
+      }
+      return obj
+   })
+
+   const setupPlayer = async() => {
+      await TrackPlayer.setupPlayer()
+      console.log("SONGS", songs)
+      await TrackPlayer.add(songs)
+   }
+   
+   const togglePlayback = async(playbackState) => {
+      const currentTrack = await TrackPlayer.getCurrentTrack()
+   
+      if( currentTrack != null ){
+         if( playbackState == State.Paused ){
+            await TrackPlayer.play()
+         } else{
+            await TrackPlayer.pause()
+         }
+      }
+   }
  
 
    useEffect(() => {
+      console.log("PARAMS",songs)
+      // setSongs(route.params)
       setupPlayer()
 
       scrollX.addListener(({ value }) => {
@@ -86,6 +99,10 @@ export default function Index() {
 
       return () =>  scrollX.removeAllListeners()
    }, [])
+
+   // useEffect(() => {
+   //    setupPlayer()
+   // }, [songs])
 
    useTrackPlayerEvents([Event.PlaybackTrackChanged], async event => {
       if( event.type == Event.PlaybackTrackChanged && event.nextTrack != null){
@@ -116,7 +133,13 @@ export default function Index() {
    const renderSongs = ({ item, index}) => (
       <Animated.View style={{ justifyContent:'center',alignItems:'center', width:width}}>
          <View style={styles.artworkWrapper}>
-            <Image style={styles.artworkImg} source={trackArtwork || item.artwork}/>
+            {(trackArtwork || item.artwork)
+            ?
+            <Image style={styles.artworkImg} source={{uri : trackArtwork || item.artwork}}/>
+            :
+            <View style={styles.dummy}/>
+            
+            }
 
          </View>
       </Animated.View>
@@ -191,6 +214,11 @@ const styles = StyleSheet.create({
       width:'100%',
       justifyContent:'center',
       backgroundColor:'#222831'
+   },
+   dummy : {
+      width : '100%',
+      height: '100%',
+      backgroundColor:'gray'
    },
    mainContainer:{
       flex:1,
