@@ -1,5 +1,5 @@
 import React, {useEffect, useRef,useState} from 'react'
-import { View, Text, TouchableOpacity, SafeAreaView,StyleSheet,Image, Dimensions, FlatList, Animated } from 'react-native'
+import { View, Text, TouchableOpacity, SafeAreaView,StyleSheet,Image, Dimensions, FlatList, Animated ,ScrollView} from 'react-native'
 
 import TrackPlayer, {
    Capability,
@@ -11,7 +11,6 @@ import TrackPlayer, {
    useTrackPlayerEvents
 } from 'react-native-track-player'
 
-import Slider from '@react-native-community/slider'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const {width, height} = Dimensions.get('window')
@@ -46,12 +45,12 @@ const {width, height} = Dimensions.get('window')
 
 
 
-export default function Index({route}) {
+export default function Songs({route}) {
    const playbackState = usePlaybackState()
    const scrollX = useRef(new Animated.Value(0)).current
 
    const [songIndex, setSongIndex] = useState(0)
-   const progress = useProgress()
+   let progress = useProgress()
 
    const [trackArtwork, settTrackArtwork] = useState('')
    const [trackArtist, settTrackArtist] = useState('')
@@ -59,6 +58,7 @@ export default function Index({route}) {
    // const [songs, setSongs] = useState([])
    const songs = route.params.map((elem, index) => {
       const obj = {
+         id : index,
          artwork : elem.artwork,
          title : elem.title,
          url : elem.url
@@ -72,11 +72,14 @@ export default function Index({route}) {
       await TrackPlayer.add(songs)
    }
    
-   const togglePlayback = async(playbackState) => {
+   const togglePlayback = async(playbackState, index) => {
+      console.log("PLAY", index, songIndex)
       const currentTrack = await TrackPlayer.getCurrentTrack()
    
       if( currentTrack != null ){
-         if( playbackState == State.Paused ){
+         if( playbackState == State.Paused || songIndex !== index){
+            // if(songIndex !== index){
+            // }
             await TrackPlayer.play()
          } else{
             await TrackPlayer.pause()
@@ -86,12 +89,14 @@ export default function Index({route}) {
  
 
    useEffect(() => {
+      console.log("PARAMS",songs)
+      // setSongs(route.params)
       setupPlayer()
 
       scrollX.addListener(({ value }) => {
          const index = Math.round(value / width)
-         skipTo(index)
-         setSongIndex(index)
+         // skipTo(index)
+         // setSongIndex(index)
       })
      
 
@@ -103,27 +108,21 @@ export default function Index({route}) {
    useTrackPlayerEvents([Event.PlaybackTrackChanged], async event => {
       if( event.type == Event.PlaybackTrackChanged && event.nextTrack != null){
          const track = await TrackPlayer.getTrack(event.nextTrack)
-         const {title, artwork, artist} = track
-         settTrackTitle(title)
-         settTrackArtwork(artwork)
-         settTrackArtist(artist)
+         const {title, artwork, artist, id} = track
+      
+         setSongIndex(id)
       }
    })
 
-   const skipToNext = () => {
-      this.songSlider.scrollToOffset({
-         offset : (songIndex + 1) * width
-      })
-   }
-
-   const skipToPrevious = () => {
-      this.songSlider.scrollToOffset({
-         offset : (songIndex - 1) * width
-      })
-   }
-
    const skipTo = async(trackId) => {
-      await TrackPlayer.skip(trackId)
+      console.log("ID", trackId)
+      togglePlayback(playbackState, trackId)
+
+      if(trackId !== songIndex){
+         await TrackPlayer.skip(trackId)
+         setSongIndex(trackId)
+      }
+
    }
 
    const renderSongs = ({ item, index}) => (
@@ -140,63 +139,31 @@ export default function Index({route}) {
          </View>
       </Animated.View>
    )
-      // console.log("ANS = ",new Date(progress.position * 1000).toISOString().substring(19, 14), new Date(progress.duration * 1000).toISOString())
+      const currentPosition = parseInt(new Date(progress.position * 1000).toISOString().substring(19, 17))
+      console.log("ANS = ",currentPosition)
           return (
             <SafeAreaView style={styles.container}>
                <View style={styles.mainContainer}>
+                  <Text style={{color:'white', fontSize:30}}>Songs</Text>
 
-                  <Animated.FlatList
-                     ref = {ref => {this.songSlider = ref}}
-                     data={songs}
-                     renderItem={renderSongs}
-                     keyExtractor={item => item.id}
-                     horizontal
-                     pagingEnabled
-                     showsHorizontalScrollIndicator={false}
-                     scrollEventThrottle={16}
-                     onScroll={Animated.event(
-                        [{nativeEvent : {
-                           contentOffset : { x : scrollX}
-                        }}],
-                        {useNativeDriver : true}
-                     )}
-                  />
-                  
+                  <ScrollView>
+                     {
+                        songs.map((elem, index) => (
+                           <TouchableOpacity onPress={() => skipTo(index)} activeOpacity={.9} style={{flexDirection:'row',justifyContent:'space-between', paddingHorizontal:13, paddingVertical:10, elevation:5, backgroundColor:'white', marginTop:10}}>
+                              <View>
+                                 <Text style={{color:'black'}}>{elem.title}</Text>
+                                 <Text style={{color:'gray', marginTop:5}}>Artist</Text>
+                              </View>
 
-                  <View>
-                     <Text style={styles.title}>{trackTitle}</Text>
-                     <Text style={styles.artist}>{trackArtist}</Text>
-                  </View>
- 
-                  <View style={styles.progress}>
-                     <Slider
-                        style={styles.progressContainer}
-                        value={progress.position}
-                        minimumValue={0}
-                        maximumValue={progress.duration}
-                        thumbTintColor='#FFD369'
-                        minimumTrackTintColor='#FFD369'
-                        maximumTrackTintColor='#FFF'
-                        onSlidingComplete={async(value) => await TrackPlayer.seekTo(value)}
-                     />
-
-                     <View style={styles.progressLabelContainer}>
-                        <Text style={styles.progressLabelTxt}>{new Date(progress.position * 1000).toISOString().substring(19, 14)}</Text>
-                        <Text style={styles.progressLabelTxt}>{new Date(progress.duration * 1000).toISOString().substring(19, 14)}</Text>
-                     </View>
-                  </View>
-
-                  <View style={styles.musicControls}>
-                     <TouchableOpacity onPress={skipToPrevious}>
-                        <Ionicons name='play-skip-back-outline' size={35} color='#FFD369'/>
-                     </TouchableOpacity>
-                     <TouchableOpacity onPress={() => togglePlayback(playbackState)}>
-                        <Ionicons name={playbackState === State.Playing ? 'ios-pause-circle' : 'ios-play-circle'} size={75} color='#FFD369'/>
-                     </TouchableOpacity>                     
-                     <TouchableOpacity onPress={skipToNext}>
-                        <Ionicons name='play-skip-forward-outline' size={35} color='#FFD369'/>
-                     </TouchableOpacity>
-                  </View>
+                              {
+                                 (songIndex === index && currentPosition > 0)
+                                 &&
+                                 <Text style={{color:'black'}}>{new Date(progress.position * 1000).toISOString().substring(19, 14)} / {new Date(progress.duration * 1000).toISOString().substring(19, 14)}</Text>
+                              }
+                           </TouchableOpacity>
+                        ))
+                     }
+                  </ScrollView>
                </View>
             </SafeAreaView>
           )
@@ -219,8 +186,9 @@ const styles = StyleSheet.create({
    mainContainer:{
       flex:1,
       width:'100%',
-      alignItems:'center',
-      justifyContent:'center'
+      padding:20
+      // alignItems:'center',
+      // justifyContent:'center'
    },
    bottomContainer:{
       borderTopColor:'#393E46',

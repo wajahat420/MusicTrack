@@ -23,7 +23,6 @@ export default function Tracks({navigation, route}) {
       ])
 
       useEffect(() => {
-         console.log("USEEE")
          database()
          .ref('/songs')
          .once("value")
@@ -84,7 +83,7 @@ export default function Tracks({navigation, route}) {
          <ScrollView contentContainerStyle={{alignItems:'center'}} style={{width:'100%'}}>
             {
                tracks.map((elem, index) => (
-                  <TouchableOpacity onPress={() => navigation.navigate('player', elem.songs)} key={index} activeOpacity={.9} style={{backgroundColor:'white', width:'100%',marginTop:15,paddingVertical:15,paddingHorizontal:20}}>
+                  <TouchableOpacity onPress={() => navigation.navigate('songs', elem.songs)} key={index} activeOpacity={.9} style={{backgroundColor:'white', width:'100%',marginTop:15,paddingVertical:15,paddingHorizontal:20}}>
                      <Text style={{fontSize:20}}>{index+1}{" - "}{elem.trackName}</Text>
                   </TouchableOpacity>
                ))
