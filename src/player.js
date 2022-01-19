@@ -57,7 +57,7 @@ export default function Index({route}) {
    const [trackArtist, settTrackArtist] = useState('')
    const [trackTitle, settTrackTitle] = useState('')
    // const [songs, setSongs] = useState([])
-   const songs = route.params.map((elem, index) => {
+   const songs = route.params?.data.map((elem, index) => {
       const obj = {
          artwork : elem.artwork,
          title : elem.title,
@@ -68,8 +68,13 @@ export default function Index({route}) {
 
    const setupPlayer = async() => {
       await TrackPlayer.setupPlayer()
-      console.log("SONGS", songs)
+      const index = route.params.index
+
       await TrackPlayer.add(songs)
+      await TrackPlayer.skip(index)
+
+
+
    }
    
    const togglePlayback = async(playbackState) => {
@@ -87,6 +92,7 @@ export default function Index({route}) {
 
    useEffect(() => {
       setupPlayer()
+
 
       scrollX.addListener(({ value }) => {
          const index = Math.round(value / width)
@@ -139,7 +145,8 @@ export default function Index({route}) {
 
          </View>
       </Animated.View>
-   )
+   )  
+   console.log("RENDER", songIndex)
       // console.log("ANS = ",new Date(progress.position * 1000).toISOString().substring(19, 14), new Date(progress.duration * 1000).toISOString())
           return (
             <SafeAreaView style={styles.container}>
