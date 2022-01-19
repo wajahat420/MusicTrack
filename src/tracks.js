@@ -64,7 +64,7 @@ export default function Tracks({navigation, route}) {
             }
           );
       }, [route.params])
-
+      console.log("tracks", tracks.length, tracks);
    return (
       <View style={{flex:1, backgroundColor:'#222831',paddingTop:30,paddingHorizontal:20}}>
 

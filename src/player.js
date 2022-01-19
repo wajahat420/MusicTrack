@@ -146,8 +146,6 @@ export default function Index({route}) {
          </View>
       </Animated.View>
    )  
-   console.log("RENDER", songIndex)
-      // console.log("ANS = ",new Date(progress.position * 1000).toISOString().substring(19, 14), new Date(progress.duration * 1000).toISOString())
           return (
             <SafeAreaView style={styles.container}>
                <View style={styles.mainContainer}>

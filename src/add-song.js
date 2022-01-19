@@ -27,7 +27,6 @@ export default function AddSong({route, navigation}) {
       )
       try{
          const file = await DocumentPicker.pickMultiple();
-         console.log("FILE", file)
          setSong(file)
       }catch(err){
          console.log(error)
@@ -198,7 +197,6 @@ export default function AddSong({route, navigation}) {
       setSong(dup)
    }
 
-   console.log("dropdown", dropdown)
    return (
       <>
       {loading &&
@@ -217,15 +215,15 @@ export default function AddSong({route, navigation}) {
             song.length !== 0
             &&
             song.map((elem,index) => (
-               <View style={{marginTop:15}}>
+               <View key={index} style={{marginTop:15}}>
                   <View key={index} style={{padding:10, flexDirection:'row', justifyContent:'space-between',alignItems:'center'}}>
-                     <Text style={{color:"white", fontSize:20}}>{index+1}{"  -  "}{elem.name}</Text>
+                     <Text numberOfLines={2}  style={{color:"white", fontSize:20, width:'65%'}}>{index+1}{"  -  "}{elem.name}</Text>
 
                      { elem.song
                         ?
                         <Image style={{width:50, height:50}} source={{uri:elem.song}}/>
                         :
-                        <TouchableOpacity style={{backgroundColor:'gray',marginTop:5,paddingVertical:5,paddingHorizontal:10,borderRadius:10}} onPress={() => uploadImg(index)}>
+                        <TouchableOpacity  style={{backgroundColor:'gray',marginTop:5,paddingVertical:5,paddingHorizontal:10,borderRadius:10,marginLeft:10}} onPress={() => uploadImg(index)}>
                            <Text style={{color:'white', fontSize:12, textAlign:'center'}}>Upload Image</Text>
                         </TouchableOpacity>
                      }

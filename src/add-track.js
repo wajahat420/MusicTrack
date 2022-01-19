@@ -20,7 +20,7 @@ export default function AddSong({navigation}) {
 
       const isValid = () => {
          if(name){
-            navigation.navigate("add-song", {trackName: name, trackID : Math.round(Math.random()*100)})
+            navigation.navigate("add-song", {trackName: name, trackID : Math.round(Math.random() * Math.random() *10000)})
          }else{
             ToastAndroid.show("Field is empty", ToastAndroid.SHORT)
          }

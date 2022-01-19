@@ -110,7 +110,6 @@ export default function Songs({route, navigation}) {
    }
 
       const currentPosition = parseInt(new Date(progress.position * 1000).toISOString().substring(19, 17))
-      console.log("ANS = ",currentPosition, songIndex,playbackState == State.Playing)
           return (
             <SafeAreaView style={styles.container}>
                <View style={styles.mainContainer}>
@@ -119,7 +118,7 @@ export default function Songs({route, navigation}) {
                   <ScrollView>
                      {
                         songs.map((elem, index) => (
-                           <TouchableOpacity onPress={() => navigation.navigate("player", {data:route.params,index})} activeOpacity={.9} style={{flexDirection:'row',justifyContent:'space-between', paddingHorizontal:13, paddingVertical:10, elevation:5, backgroundColor:'white', marginTop:15}}>
+                           <TouchableOpacity key={index} onPress={() => navigation.navigate("player", {data:route.params,index})} activeOpacity={.9} style={{flexDirection:'row',justifyContent:'space-between', paddingHorizontal:13, paddingVertical:10, elevation:5, backgroundColor:'white', marginTop:15}}>
                               <View style={{flexDirection:'row'}}>
 
                                  <View>
