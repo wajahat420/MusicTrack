@@ -10,7 +10,7 @@ import Location from '../location';
 import Songs from '../songs';
 import Genres from '../genres';
 import Shop from '../shop';
-
+import Login from '../login';
 const Stack = createNativeStackNavigator();
 
 const MyStack = () => {
@@ -32,6 +32,7 @@ const MyStack = () => {
         <Stack.Screen name="songs" component={Songs} />
         <Stack.Screen name="genres" component={Genres} />
         <Stack.Screen name="shop" component={Shop} />
+        <Stack.Screen name="login" component={Login} />
       </Stack.Navigator>
     </NavigationContainer>
   );

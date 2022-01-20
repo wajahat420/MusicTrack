@@ -5,6 +5,7 @@ import Ionicons from "react-native-vector-icons/Ionicons"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import AntDesign from "react-native-vector-icons/AntDesign"
 import Firebase from "../config/firebase"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Tracks({navigation, route}) {
    const { database} = Firebase()
@@ -12,6 +13,8 @@ export default function Tracks({navigation, route}) {
    const [tracks, setTracks] = useState([
    
       ])
+   
+      const [email, setEmail] = useState('')
 
       useEffect(() => {
          database()
@@ -55,7 +58,8 @@ export default function Tracks({navigation, route}) {
                   // return false
                } )
                //  console.log(arr)
-                setTracks(arr)
+               getEmail()
+               setTracks(arr)
                
               }
             },
@@ -64,12 +68,21 @@ export default function Tracks({navigation, route}) {
             }
           );
       }, [route.params])
+
+      const getEmail = async () => {
+         const mail =  await AsyncStorage.getItem('email')
+         setEmail(mail)
+         console.log("MAIL", mail);
+      }
+
       console.log("tracks", tracks.length, tracks);
    return (
       <View style={{flex:1, backgroundColor:'#222831',paddingTop:30,paddingHorizontal:20}}>
 
          <View style={{alignItems:'center'}}>
             <Text style={{color:'white', fontSize:30,marginBottom:40, textAlign:'center',borderBottomWidth:1,borderBottomColor:'white', width:100}}>Tracks</Text>
+
+            {email == "abc@gmail.com" &&
             <TouchableOpacity onPress={() => navigation.navigate("add-track")} style={{position:'absolute', right:10, top:10}}>
                <AntDesign
                   name="plussquareo"
@@ -77,6 +90,7 @@ export default function Tracks({navigation, route}) {
                   color="white"
                />
             </TouchableOpacity>
+            }
 
             <TouchableOpacity onPress={() => navigation.navigate("genres")} style={{position:'absolute', left:10, top:10}}>
                <MaterialCommunityIcons
