@@ -83,7 +83,6 @@ export default function Songs({route, navigation}) {
    );
 
    const deleteFromDB = (index) => {
-      console.log("INDEX", route.params[index].key)
       let userRef = database().ref('songs/' + route.params[index].key);
       userRef.remove()
       .then(res => navigation.navigate("tracks", {empty:""}))
@@ -123,7 +122,7 @@ export default function Songs({route, navigation}) {
 
                                  <View>
                                     <Text numberOfLines={1} style={{color:'black', width:100}}>{elem.title}</Text>
-                                    <Text numberOfLines={1} style={{color:'gray', marginTop:5}}>{route.params[index].artist}</Text>
+                                    <Text numberOfLines={1} style={{color:'gray', marginTop:5,width:100}}>{route.params[index].artist}</Text>
                                  </View>
 
                                  <TouchableOpacity onPress={() => skipTo(index)} style={{marginLeft:20}}>

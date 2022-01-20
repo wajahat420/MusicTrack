@@ -87,7 +87,7 @@ export default function Tracks({navigation, route}) {
          <View style={{alignItems:'center'}}>
             <Text style={{color:'white', fontSize:30,marginBottom:40, textAlign:'center',borderBottomWidth:1,borderBottomColor:'white', width:100}}>Tracks</Text>
 
-            {email == "abc@gmail.com" &&
+            {email == "amazon@woelk-group.de" &&
             <TouchableOpacity onPress={() => navigation.navigate("add-track")} style={{position:'absolute', right:10, top:10}}>
                <AntDesign
                   name="plussquareo"

@@ -4,11 +4,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function AddSong({navigation}) {
    const [name, setName] = useState('')
+   const [email, setEmail] = useState('')
 
    useEffect(() => {
       try{
          const getEmail = async () => {
             const mail =  await AsyncStorage.getItem('email')
+            setEmail(mail)
             console.log("MAIL", mail);
          }
          getEmail()
@@ -23,12 +25,15 @@ export default function AddSong({navigation}) {
 
       const isValid = async() => {
          await AsyncStorage.setItem('email', name)
+         setEmail(name)
+         navigation.navigate("location", "check")
          // if(name){
          //    navigation.navigate("add-song", {trackName: name, trackID : Math.round(Math.random() * Math.random() *10000)})
          // }else{
          //    ToastAndroid.show("Field is empty", ToastAndroid.SHORT)
          // }
       }
+      console.log("email", email);
 
    return (
       <View style={{flex:1, backgroundColor:'#222831', justifyContent:'center',paddingTop:30,paddingHorizontal:20}}>
@@ -36,9 +41,11 @@ export default function AddSong({navigation}) {
          <TextInput onChangeText={(text) => setName(text)} placeholderTextColor="gray" style={{borderColor:'white',borderWidth:1, color:'white', fontSize:25,padding:10,marginBottom:15}} placeholder="email@gmail.com"/>
 
         <View style={{position:'absolute', alignSelf:'center', bottom:20,  backgroundColor:'gray',width:'100%'}}>
-            <TouchableOpacity onPress={isValid} style={{backgroundColor:'brown',padding:10, width:'100%'}}>
-                <Text style={{color:'white', textAlign:'center', fontSize:22}}>Login</Text>
-            </TouchableOpacity>
+            
+               <TouchableOpacity onPress={isValid} style={{backgroundColor:'brown',padding:10, width:'100%'}}>
+                  <Text style={{color:'white', textAlign:'center', fontSize:22}}>Login</Text>
+               </TouchableOpacity>
+          
         </View>
    </View>
    )
