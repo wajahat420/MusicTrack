@@ -73,6 +73,11 @@ export default function Tracks({navigation, route}) {
          const mail =  await AsyncStorage.getItem('email')
          setEmail(mail)
          console.log("MAIL", mail);
+
+
+
+
+         
       }
 
       console.log("tracks", tracks.length, tracks);
