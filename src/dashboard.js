@@ -13,7 +13,7 @@ export default function Dashboard({navigation}) {
 
       <View style={{flexDirection:'row',width:'80%',marginTop:50,justifyContent:'space-between'}}>
 
-         <TouchableOpacity onPress={() => navigation.navigate("tracks")} style={{backgroundColor:'white', height:80,width:80, alignItems:'center', justifyContent:'center'}}>
+         <TouchableOpacity onPress={() => navigation.navigate("genres")} style={{backgroundColor:'white', height:80,width:80, alignItems:'center', justifyContent:'center'}}>
             <Fontisto
                name="music-note"
                size={50}

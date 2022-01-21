@@ -72,12 +72,6 @@ export default function Tracks({navigation, route}) {
       const getEmail = async () => {
          const mail =  await AsyncStorage.getItem('email')
          setEmail(mail)
-         console.log("MAIL", mail);
-
-
-
-
-         
       }
 
       console.log("tracks", tracks.length, tracks);
@@ -87,7 +81,7 @@ export default function Tracks({navigation, route}) {
          <View style={{alignItems:'center'}}>
             <Text style={{color:'white', fontSize:30,marginBottom:40, textAlign:'center',borderBottomWidth:1,borderBottomColor:'white', width:100}}>Tracks</Text>
 
-            {email == "amazon@woelk-group.de" &&
+            {/* {email == "amazon@woelk-group.de" &&
             <TouchableOpacity onPress={() => navigation.navigate("add-track")} style={{position:'absolute', right:10, top:10}}>
                <AntDesign
                   name="plussquareo"
@@ -95,15 +89,15 @@ export default function Tracks({navigation, route}) {
                   color="white"
                />
             </TouchableOpacity>
-            }
+            } */}
 
-            <TouchableOpacity onPress={() => navigation.navigate("genres")} style={{position:'absolute', left:10, top:10}}>
+            {/* <TouchableOpacity onPress={() => navigation.navigate("genres")} style={{position:'absolute', left:10, top:10}}>
                <MaterialCommunityIcons
                   name="playlist-music"
                   size={35}
                   color="white"
                />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
          </View>
             
          <ScrollView contentContainerStyle={{alignItems:'center'}} style={{width:'100%'}}>

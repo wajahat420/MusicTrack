@@ -5,9 +5,13 @@ import Ionicons from "react-native-vector-icons/Ionicons"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import AntDesign from "react-native-vector-icons/AntDesign"
 import Firebase from "../config/firebase"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Genres({navigation, route}) {
    const { database} = Firebase()
+
+   const [email, setEmail] = useState(false)
+
 
    const tracks = [
          {id:1, name:'Ambiente-Musik'},
@@ -29,8 +33,6 @@ export default function Genres({navigation, route}) {
                let todos = snapshot.val()
                let keys = Object.keys(todos)
 
-               // let data=  keys.map(elem => todos[elem])
-
                let data=  keys.map(elem => {
                   const obj = {
                      ...todos[elem],
@@ -51,15 +53,15 @@ export default function Genres({navigation, route}) {
                            url : song.songURL,
                            artwork : song.imgURL,
                            id : song.trackID
-                           // songs : [elem]
                         }
                         temp.push(obj)
                      }
                   }) 
                   arr.push(temp)
                })
-
-                setData(arr)
+               
+               getEmail()
+               setData(arr)
                
               }
             },
@@ -69,7 +71,15 @@ export default function Genres({navigation, route}) {
           );
       }, [route.params])
 
-      console.log("DATA", data)
+      const getEmail = async () => {
+         const mail =  await AsyncStorage.getItem('email')
+         const pass =  await AsyncStorage.getItem('pass')
+         if(mail === "amazon@woelk-group.de" && pass === "ClEaNsPoRts28!"){
+            setEmail(true)
+         }  else{
+            setEmail(false)
+         }
+      }
 
 
    return (
@@ -77,7 +87,24 @@ export default function Genres({navigation, route}) {
 
          <View style={{alignItems:'center'}}>
             <Text style={{color:'white', fontSize:30,marginBottom:40, textAlign:'center',borderBottomWidth:1,borderBottomColor:'white', width:100}}>Genres</Text>
-           
+            
+            {email  &&
+            <TouchableOpacity onPress={() => navigation.navigate("add-track")} style={{position:'absolute', right:10, top:10}}>
+               <AntDesign
+                  name="plussquareo"
+                  size={30}
+                  color="white"
+               />
+            </TouchableOpacity>
+            }
+
+            <TouchableOpacity onPress={() => navigation.navigate("tracks")} style={{position:'absolute', left:10, top:10}}>
+               <MaterialCommunityIcons
+                  name="playlist-music"
+                  size={35}
+                  color="white"
+               />
+            </TouchableOpacity>
          </View>
             
          <ScrollView contentContainerStyle={{alignItems:'center'}} style={{width:'100%'}}>

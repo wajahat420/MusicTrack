@@ -1,9 +1,10 @@
 import React,{useEffect, useState} from 'react'
-import { View, Text, ToastAndroid, TextInput, Button, TouchableOpacity  } from 'react-native'
+import { View, Text, ToastAndroid, TextInput, Button, TouchableOpacity } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function AddSong({navigation}) {
    const [name, setName] = useState('')
+   const [pass, setPass] = useState('')
    const [email, setEmail] = useState('')
 
    useEffect(() => {
@@ -24,21 +25,22 @@ export default function AddSong({navigation}) {
       }, [])
 
       const isValid = async() => {
-         await AsyncStorage.setItem('email', name)
-         setEmail(name)
-         navigation.navigate("location", "check")
-         // if(name){
-         //    navigation.navigate("add-song", {trackName: name, trackID : Math.round(Math.random() * Math.random() *10000)})
-         // }else{
-         //    ToastAndroid.show("Field is empty", ToastAndroid.SHORT)
-         // }
+         if(name && pass){
+            await AsyncStorage.setItem('email', name)
+            await AsyncStorage.setItem('pass', pass)
+            // setEmail(name)
+            // setEmail(name)
+            navigation.navigate("location", "check")
+         }else{
+            ToastAndroid.show("Kindly fill the fields", ToastAndroid.SHORT)
+         }
       }
-      console.log("email", email);
 
    return (
       <View style={{flex:1, backgroundColor:'#222831', justifyContent:'center',paddingTop:30,paddingHorizontal:20}}>
-         <Text style={{color:'white', fontSize:30,marginTop:-60,marginBottom:30}} >Email here..</Text>
+         <Text style={{color:'white', textAlign:'center', fontSize:30,marginTop:-60,marginBottom:30}} >Login </Text>
          <TextInput onChangeText={(text) => setName(text)} placeholderTextColor="gray" style={{borderColor:'white',borderWidth:1, color:'white', fontSize:25,padding:10,marginBottom:15}} placeholder="email@gmail.com"/>
+         <TextInput onChangeText={(text) => setPass(text)} placeholderTextColor="gray" style={{borderColor:'white',borderWidth:1, color:'white', fontSize:25,padding:10,marginBottom:15}} placeholder="password"/>
 
         <View style={{position:'absolute', alignSelf:'center', bottom:20,  backgroundColor:'gray',width:'100%'}}>
             
