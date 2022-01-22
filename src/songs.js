@@ -12,6 +12,7 @@ import Feather from "react-native-vector-icons/Feather"
 import AntDesign from "react-native-vector-icons/AntDesign"
 import Entypo from "react-native-vector-icons/Entypo"
 import Firebase from '../config/firebase';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const {width, height} = Dimensions.get('window')
@@ -25,12 +26,14 @@ export default function Songs({route, navigation}) {
    const scrollX = useRef(new Animated.Value(0)).current
 
    const [songIndex, setSongIndex] = useState(0)
+   const [email, setEmail] = useState(false)
    const [deletePopup, setDeletePopup] = useState(-1)
 
    let progress = useProgress()
 
 
-   const songs = route.params.map((elem, index) => {
+   const songs = route.params 
+   ? route.params.map((elem, index) => {
       const obj = {
          id : index,
          artwork : elem.artwork,
@@ -39,11 +42,22 @@ export default function Songs({route, navigation}) {
       }
       return obj
    })
+   : []
 
    // console.log("SONNN", route.params)
    const setupPlayer = async() => {
       await TrackPlayer.setupPlayer()
       await TrackPlayer.add(songs)
+   }
+
+   const getEmail = async () => {
+      const mail =  await AsyncStorage.getItem('email')
+      const pass =  await AsyncStorage.getItem('pass')
+      if(mail === "amazon@woelk-group.de" && pass === "ClEaNsPoRts28!"){
+         setEmail(true)
+      }  else{
+         setEmail(false)
+      }
    }
    
    const togglePlayback = async(playbackState, index) => {
@@ -92,6 +106,7 @@ export default function Songs({route, navigation}) {
 
    useEffect(() => {
       setupPlayer()
+      getEmail()
       return () =>  scrollX.removeAllListeners()
    }, [])
 
@@ -150,14 +165,16 @@ export default function Songs({route, navigation}) {
                                  </TouchableOpacity>
                               }
                               
-
-                              <TouchableOpacity onPress={(() => setDeletePopup(deletePopup === index ? -1 : index))} style={{position:'absolute', right:0, top:8,padding:5}}>
-                                 <Entypo
-                                    name="dots-three-vertical"
-                                    color="black"
-                                    size={20}
-                                 />
-                              </TouchableOpacity>
+                              {
+                                 email  &&
+                                 <TouchableOpacity onPress={(() => setDeletePopup(deletePopup === index ? -1 : index))} style={{position:'absolute', right:0, top:8,padding:5}}>
+                                    <Entypo
+                                       name="dots-three-vertical"
+                                       color="black"
+                                       size={20}
+                                    />
+                                 </TouchableOpacity>
+                              }
 
                               {
                                  (songIndex === index && currentPosition > 0)

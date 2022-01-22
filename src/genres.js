@@ -81,6 +81,8 @@ export default function Genres({navigation, route}) {
          }
       }
 
+      console.log("DATA", data);
+
 
    return (
       <View style={{flex:1, backgroundColor:'#222831',paddingTop:30,paddingHorizontal:20}}>
