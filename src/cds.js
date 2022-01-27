@@ -4,17 +4,29 @@ import Fontisto from "react-native-vector-icons/Fontisto"
 
 export default function Cds({route, navigation}) {
 
-   const songs = route.params 
-   ? route.params.map((elem, index) => {
+   const data = []
+   const songs = {}
+   route.params 
+   ? route.params.forEach((elem, index) => {
       const obj = {
          id : index,
          artwork : elem.artwork,
          title : elem.title,
-         url : elem.url
+         url : elem.url,
+         artist : elem.artist
       }
-      return obj
+      console.log("ARTIST", elem.artist);
+      if(songs[elem.artist]){
+         songs[elem.artist].push(obj)
+      }else{
+         data.push(obj)
+         songs[elem.artist] = [ obj ]
+      }
+      // return obj
    })
    : []
+   console.log("ROUTEEEE",Object.keys(songs));
+   // console.log("ROUTEEEE",Object.keys(songs));
 
 
   return (
@@ -40,11 +52,11 @@ export default function Cds({route, navigation}) {
       </View>
       <ScrollView>
          {
-            songs.map(elem => {
+            data.map(elem => {
                return(
 
                <View style={{width:'100%', alignItems:'center',paddingHorizontal:25, marginBottom:20}}>
-                  <TouchableOpacity onPress={() => navigation.navigate('songs', songs)} style={{width:300,height:340, backgroundColor: !elem.artwork ? 'gray' : 'black'}}>
+                  <TouchableOpacity onPress={() => navigation.navigate('songs', songs[elem.artist])} style={{width:300,height:340, backgroundColor: !elem.artwork ? 'gray' : 'black'}}>
                   {
                      elem.artwork 
                      ?
@@ -54,7 +66,7 @@ export default function Cds({route, navigation}) {
                      <></>
                   }
                   </TouchableOpacity>
-                  <Text style={{color:'white', fontSize:22,marginTop:10}}>{elem.title}</Text>
+                  <Text style={{color:'white', fontSize:22,marginTop:10}}>{elem.artist}</Text>
                </View>
                )
             })

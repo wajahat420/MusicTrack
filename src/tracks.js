@@ -108,7 +108,7 @@ export default function Tracks({navigation, route}) {
             }
          </ScrollView>
 
-         <View style={{flexDirection:'row',marginTop:5, alignItems:'flex-end',justifyContent:'flex-start'}}>
+         <View style={{flexDirection:'row',marginVertical:5, alignItems:'flex-end',justifyContent:'flex-start'}}>
             <TouchableOpacity onPress={() => navigation.navigate("shop")} activeOpacity={.9} style={{backgroundColor:'white', height:55,width:55, alignSelf:'flex-start', alignItems:'center', justifyContent:'center'}}>
                <Entypo
                   name="shopping-cart"

@@ -82,7 +82,7 @@ export default function Genres({navigation, route}) {
          }
       }
 
-      console.log("DATA", data);
+      // console.log("DATA", data);
 
 
    return (
