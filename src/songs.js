@@ -13,6 +13,7 @@ import AntDesign from "react-native-vector-icons/AntDesign"
 import Entypo from "react-native-vector-icons/Entypo"
 import Firebase from '../config/firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Fontisto from "react-native-vector-icons/Fontisto"
 
 
 const {width, height} = Dimensions.get('window')
@@ -127,8 +128,20 @@ export default function Songs({route, navigation}) {
           return (
             <SafeAreaView style={styles.container}>
                <View style={styles.mainContainer}>
-                  <Text style={{color:'white', fontSize:30, textAlign:'center',marginBottom:25}}>Songs</Text>
+                  {/* <Text style={{color:'white', fontSize:30, textAlign:'center',marginBottom:25}}>Songs</Text> */}
+                  <View style={{alignItems:'center', width:'100%'}}>
+                     <Text style={{color:'white', fontSize:30,marginBottom:40, textAlign:'center',borderBottomWidth:1,borderBottomColor:'white'}}>
+                     Songs</Text>
+                     
+                     <TouchableOpacity onPress={() => navigation.navigate("dashboard")} style={{position:'absolute', right:10, top:10}}>
+                           <Fontisto
+                              name="home"
+                              size={30}
+                              color="white"
+                           />
+                     </TouchableOpacity>
 
+                  </View>
                   <ScrollView>
                      {
                         songs.map((elem, index) => (

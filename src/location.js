@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { View, Text,Image, TouchableOpacity } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Fontisto from "react-native-vector-icons/Fontisto"
 
 export default function Location({navigation, route}) {
    const [email, setEmail] = useState('')
@@ -31,8 +32,20 @@ export default function Location({navigation, route}) {
       console.log("CHECK", email);
 
    return (
-      <View style={{flex:1, backgroundColor:'#222831', paddingLeft:15}}>
-         <Text style={{color:'white', marginTop:10, fontSize:25, textAlign:'center',paddingTop:20, marginVertical:20}}>Address</Text>
+      <View style={{flex:1, backgroundColor:'#222831',paddingTop:30, paddingHorizontal:15}}>
+
+         <View style={{alignItems:'center', marginBottom:20}}>
+            <Text style={{color:'white',  fontSize:25, textAlign:'center'}}>
+            Address</Text>
+
+            <TouchableOpacity onPress={() => navigation.navigate("dashboard")} style={{position:'absolute', right:10, top:10}}>
+               <Fontisto
+                  name="home"
+                  size={30}
+                  color="white"
+               />
+            </TouchableOpacity>
+         </View>
 
          <View style={{alignItems:'center'}}>
 

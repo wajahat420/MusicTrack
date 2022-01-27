@@ -2,10 +2,9 @@ import React,{useState, useEffect} from 'react'
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
 import Entypo from "react-native-vector-icons/Entypo"
 import Ionicons from "react-native-vector-icons/Ionicons"
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
-import AntDesign from "react-native-vector-icons/AntDesign"
 import Firebase from "../config/firebase"
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Fontisto from "react-native-vector-icons/Fontisto"
 
 export default function Tracks({navigation, route}) {
    const { database} = Firebase()
@@ -90,14 +89,13 @@ export default function Tracks({navigation, route}) {
                />
             </TouchableOpacity>
             } */}
-
-            {/* <TouchableOpacity onPress={() => navigation.navigate("genres")} style={{position:'absolute', left:10, top:10}}>
-               <MaterialCommunityIcons
-                  name="playlist-music"
-                  size={35}
+            <TouchableOpacity onPress={() => navigation.navigate("dashboard")} style={{position:'absolute', right:10, top:10}}>
+               <Fontisto
+                  name="home"
+                  size={30}
                   color="white"
                />
-            </TouchableOpacity> */}
+            </TouchableOpacity>
          </View>
             
          <ScrollView contentContainerStyle={{alignItems:'center'}} style={{width:'100%'}}>
