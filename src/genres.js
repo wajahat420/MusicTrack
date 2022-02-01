@@ -61,7 +61,6 @@ export default function Genres({navigation, route}) {
                   arr.push(temp)
                })
                
-               getEmail()
                setData(arr)
                
               }
@@ -70,11 +69,14 @@ export default function Genres({navigation, route}) {
               console.log("The read failed: " + errorObject.code);
             }
           );
+          getEmail()
+
       }, [route.params])
 
       const getEmail = async () => {
          const mail =  await AsyncStorage.getItem('email')
          const pass =  await AsyncStorage.getItem('pass')
+         console.log("ABCC", mail, pass);
          if(mail === "amazon@woelk-group.de" && pass === "ClEaNsPoRts28!"){
             setEmail(true)
          }  else{
@@ -82,15 +84,18 @@ export default function Genres({navigation, route}) {
          }
       }
 
-      // console.log("DATA", data);
-
-
    return (
       <View style={{flex:1, backgroundColor:'#222831',paddingTop:30,paddingHorizontal:20}}>
 
          <View style={{alignItems:'center'}}>
             <Text style={{color:'white', fontSize:30,marginBottom:40, textAlign:'center',borderBottomWidth:1,borderBottomColor:'white', width:100}}>Genres</Text>
-            
+            {/* <TouchableOpacity onPress={() => navigation.navigate("add-track")} style={{position:'absolute', right:10, top:10}}>
+               <AntDesign
+                  name="plussquareo"
+                  size={30}
+                  color="white"
+               />
+            </TouchableOpacity> */}
             {email  ?
             <TouchableOpacity onPress={() => navigation.navigate("add-track")} style={{position:'absolute', right:10, top:10}}>
                <AntDesign

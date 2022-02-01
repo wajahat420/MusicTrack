@@ -273,7 +273,7 @@ export default function AddSong({route, navigation}) {
 
 
       </ScrollView>
-            <TouchableOpacity onPress={createPlaylist}  style={{backgroundColor:'brown',padding:10,marginTop:20, position:'absolute', bottom:10,left:20, right:20, width:'100%'}}>
+            <TouchableOpacity onPress={createPlaylist}  style={{backgroundColor:'brown',padding:10,marginTop:20, position:'absolute', bottom:10,left:20, right:20}}>
                <Text style={{color:'white', textAlign:'center', fontSize:22}}>Create</Text>
             </TouchableOpacity>
       </>
