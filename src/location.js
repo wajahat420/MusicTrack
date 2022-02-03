@@ -59,7 +59,7 @@ export default function Location({navigation, route}) {
             <Text style={{color:'white',  fontSize:25}}>Link </Text>
          </View>
 
-         <View style={{width:'100%', alignItems:'center', position:'absolute', bottom:20}}>
+         <View style={{left:0,right:0, alignItems:'center', position:'absolute', bottom:20}}>
          {
             email
             ?
