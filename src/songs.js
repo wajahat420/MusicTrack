@@ -98,10 +98,15 @@ export default function Songs({route, navigation}) {
    );
 
    const deleteFromDB = (index) => {
+      console.log('SONGS', route.params)
+      console.log('DELETE', route.params[index].key)
+      console.log('INDEX', index)
+      
       let userRef = database().ref('songs/' + route.params[index].key);
       userRef.remove()
-      .then(res => navigation.navigate("tracks", {empty:""}))
+      .then(res => navigation.navigate("genres"))
       .catch(err => console.log("Err", err))
+      // .then(res => console.log(''))
    }
  
 

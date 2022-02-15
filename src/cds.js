@@ -13,7 +13,8 @@ export default function Cds({route, navigation}) {
          artwork : elem.artwork,
          title : elem.title,
          url : elem.url,
-         artist : elem.artist
+         artist : elem.artist,
+         key : elem.key
       }
       console.log("ARTIST", elem.artist);
       if(songs[elem.artist]){

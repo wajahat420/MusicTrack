@@ -16,6 +16,12 @@ export default function Tracks({navigation, route}) {
       const [email, setEmail] = useState('')
 
       useEffect(() => {
+         navigation.addListener('focus', () => {
+            getData()
+         })
+      }, [])
+
+      const getData = () => {
          database()
          .ref('/songs')
          .once("value")
@@ -66,14 +72,14 @@ export default function Tracks({navigation, route}) {
               console.log("The read failed: " + errorObject.code);
             }
           );
-      }, [route.params])
+      }
 
       const getEmail = async () => {
          const mail =  await AsyncStorage.getItem('email')
          setEmail(mail)
       }
 
-      console.log("tracks", tracks.length, tracks);
+      // console.log("tracks", tracks.length, tracks);
    return (
       <View style={{flex:1, backgroundColor:'#222831',paddingTop:30,paddingHorizontal:20}}>
 

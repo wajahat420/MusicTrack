@@ -25,6 +25,15 @@ export default function Genres({navigation, route}) {
 
 
       useEffect(() => {
+         navigation.addListener('focus', () => {
+            getData()
+             getEmail()
+          })
+        
+
+      }, [])
+
+      const getData = () => {
          database()
          .ref('/songs')
          .once("value")
@@ -69,20 +78,20 @@ export default function Genres({navigation, route}) {
               console.log("The read failed: " + errorObject.code);
             }
           );
-          getEmail()
-
-      }, [route.params])
+      }
 
       const getEmail = async () => {
          const mail =  await AsyncStorage.getItem('email')
          const pass =  await AsyncStorage.getItem('pass')
-         console.log("ABCC", mail, pass);
          if(mail === "amazon@woelk-group.de" && pass === "ClEaNsPoRts28!"){
             setEmail(true)
          }  else{
             setEmail(false)
          }
       }
+
+      console.log('GET SONGS', tracks)
+      // console.log('GET TRACKS', data[0])
 
    return (
       <View style={{flex:1, backgroundColor:'#222831',paddingTop:30,paddingHorizontal:20}}>
