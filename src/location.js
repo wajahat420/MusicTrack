@@ -53,7 +53,7 @@ export default function Location({navigation, route}) {
          </View>
 
          <View style={{width:200,marginTop:30}}>
-            <Text style={{color:'white', marginTop:10, fontSize:25}}>Wolk Group Christian work Schumaster 2 35510 buttbach</Text>
+            <Text style={{color:'white', marginTop:10, fontSize:25}}>Wölk Goup Christian Wölk Schumannstr. 2 35510 Butzbach</Text>
             <Text style={{color:'white', marginTop:30, fontSize:25}}>Music:</Text>
             <Text style={{color:'white',  fontSize:25}}>Dr and Stein </Text>
             <Text style={{color:'white',  fontSize:25}}>Link </Text>
